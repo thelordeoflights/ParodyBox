@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - hologram
+  - world
+  - Outofbounds
+  - point
   layers:
   - Default
   - TransparentFX

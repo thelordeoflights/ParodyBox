@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Playermovements : MonoBehaviour
 {
@@ -8,15 +9,15 @@ public class Playermovements : MonoBehaviour
     public Rigidbody PlayerRb;
     private Animator playeranim;
 
+    private bool gameOver = false;
+
+    [SerializeField]
+    private TextMeshProUGUI gameover;
 
     public float verticalinput;
     public float horizontalinput;
     private float jump = 4f;
-    private float moveSpeed;
 
-    public Vector3 normal = Vector3.up;
-
-    Vector3 moveDirection;
 
     Rotateenv rotateenv;
     void Start()
@@ -30,8 +31,15 @@ public class Playermovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameOver)
+        {
+            return;
+        }
+        checkMovement();
+    }
 
-
+    private void checkMovement()
+    {
         verticalinput = Input.GetAxisRaw("Vertical");
         horizontalinput = Input.GetAxisRaw("Horizontal");
 
@@ -54,6 +62,19 @@ public class Playermovements : MonoBehaviour
             playeranim.SetTrigger("Jump_trig");
             PlayerRb.AddForce(transform.up * jump, ForceMode.Impulse);
         }
+    }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Outofbounds"))
+        {
+            // Destroy(transform.gameObject);
+            Gameover();
+        }
+    }
+    public void Gameover()
+    {
+        gameOver = true;
+        gameover.gameObject.SetActive(true);
     }
 }

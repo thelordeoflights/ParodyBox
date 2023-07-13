@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
+    [SerializeField]
+    public GameObject playerObj;
+    private Playermovements pm;
     public float timerValue = 120;
     public Text timeText;
     void Start()
     {
 
+        pm = playerObj.GetComponent<Playermovements>();
     }
     void Update()
     {
@@ -23,6 +27,7 @@ public class Timer : MonoBehaviour
         {
 
             timerValue = 0;
+            pm.Gameover();
         }
         DisplayTime(timerValue);
 
