@@ -20,9 +20,15 @@ public class HologramHandler : MonoBehaviour
 
     }
 
-    public void setPosition(Vector3 position)
+    public void setPosition(Vector3 upVector, Vector3 position)
     {
+        gb.transform.up = upVector;
         gb.transform.position = position;
+    }
+
+    public void setRotation(Quaternion rotation)
+    {
+        gb.transform.rotation = rotation;
     }
 
     public void setActive(bool val)

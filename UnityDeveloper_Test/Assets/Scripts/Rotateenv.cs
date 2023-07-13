@@ -4,50 +4,125 @@ using UnityEngine;
 
 public class Rotateenv : MonoBehaviour
 {
-    public enum Axis { x, y, z, zneg };
-    public Axis currentAxis;
+    public enum Axis { x, y, z, zneg, xneg, yneg };
+    public enum Directions { UP, DOWN, LEFT, RIGHT };
 
-    // Start is called before the first frame update
+    public GameObject castPoint;
+    private Vector3 Gravityvector;
+    public float g = 9.8f;
+
+    private bool hasSelection = false;
+    public RaycastHit currentSelection;
+
+    LayerMask wallMask;
+    public HologramHandler hologramHandler;
+
+
+
     void Start()
     {
-        currentAxis = Axis.z;
+        wallMask = LayerMask.NameToLayer("wall");
     }
 
 
-    // Update is called once per frame
+
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.Return) && hasSelection)
         {
-            currentAxis = Axis.x;
-            Physics.gravity = new Vector3(9.8f, 0, 0);
-            Vector3 newRotation = new Vector3(0, 0, 90);
-            transform.eulerAngles = newRotation;
+
+
+            setGravity();
+
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+
+            bool surfaceSelected = selectSurface(castPoint.transform.position, -castPoint.transform.right);
+            if (surfaceSelected)
+            {
+                Gravityvector = -transform.right * g;
+            }
 
         }
 
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
 
-            currentAxis = Axis.y;
-            Physics.gravity = new Vector3(0, 0, -9.8f);
-            Vector3 newRotation = new Vector3(90, 0, 0);
-            transform.eulerAngles = newRotation;
+            bool surfaceSelected = selectSurface(castPoint.transform.position, castPoint.transform.right);
+            if (surfaceSelected)
+            {
+                Gravityvector = transform.right * g;
+            }
+
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            currentAxis = Axis.z;
-            Physics.gravity = new Vector3(0, -9.8f, 0);
-            Vector3 newRotation = new Vector3(0, 90, 0);
-            transform.eulerAngles = newRotation;
+            bool surfaceSelected = selectSurface(castPoint.transform.position, castPoint.transform.up);
+            if (surfaceSelected)
+            {
+                Gravityvector = transform.up * g;
+            }
+
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            currentAxis = Axis.zneg;
-            Physics.gravity = new Vector3(0, 9.8f, 0);
-            Vector3 newRotation = new Vector3(0, -90, 180);
-            transform.eulerAngles = newRotation;
+            bool surfaceSelected = selectSurface(castPoint.transform.position, castPoint.transform.forward);
+            if (surfaceSelected)
+            {
+                Gravityvector = transform.forward * g;
+            }
         }
     }
+
+
+
+    bool selectSurface(Vector3 position, Vector3 direction)
+    {
+        position.y += 1f;
+        Ray castRay = new Ray(position, direction * 100f);
+        Debug.DrawRay(position, direction * 100f, Color.yellow);
+        if (Physics.Raycast(castRay, out RaycastHit hit, Mathf.Infinity))
+        {
+
+            if (hit.transform.gameObject.layer == wallMask)
+            {
+                Debug.Log(hit.transform.gameObject.name);
+                hasSelection = true;
+                currentSelection = hit;
+                hologramHandler.setActive(true);
+                hologramHandler.setPosition(hit.normal, hit.point);
+                return true;
+            }
+            else
+            {
+                return false;
+
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    void setGravity()
+    {
+
+        Physics.gravity = Gravityvector;
+
+        transform.up = currentSelection.normal;
+        transform.position = currentSelection.transform.position;
+        resetSelection();
+
+    }
+    void resetSelection()
+    {
+        hasSelection = false;
+        hologramHandler.setActive(false);
+    }
+
 }

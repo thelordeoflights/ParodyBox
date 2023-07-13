@@ -14,6 +14,8 @@ public class Playermovements : MonoBehaviour
     private float jump = 4f;
     private float moveSpeed;
 
+    public Vector3 normal = Vector3.up;
+
     Vector3 moveDirection;
 
     Rotateenv rotateenv;
@@ -33,9 +35,6 @@ public class Playermovements : MonoBehaviour
         verticalinput = Input.GetAxisRaw("Vertical");
         horizontalinput = Input.GetAxisRaw("Horizontal");
 
-
-
-
         transform.Translate(Vector3.forward * verticalinput * Time.deltaTime * 5);
         transform.Rotate(Vector3.up * horizontalinput * 100 * Time.deltaTime);
 
@@ -46,7 +45,6 @@ public class Playermovements : MonoBehaviour
         else
         {
             playeranim.SetBool("Run_trig", false);
-
         }
 
 
@@ -54,25 +52,7 @@ public class Playermovements : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             playeranim.SetTrigger("Jump_trig");
-            switch (rotateenv.currentAxis)
-            {
-                case Rotateenv.Axis.x:
-                    PlayerRb.AddForce(Vector3.left * jump, ForceMode.Impulse);
-                    break;
-                case Rotateenv.Axis.y:
-                    PlayerRb.AddForce(Vector3.forward * jump, ForceMode.Impulse);
-                    break;
-                case Rotateenv.Axis.z:
-                    PlayerRb.AddForce(Vector3.up * jump, ForceMode.Impulse);
-                    break;
-                case Rotateenv.Axis.zneg:
-                    PlayerRb.AddForce(Vector3.down * jump, ForceMode.Impulse);
-                    break;
-
-                default:
-                    PlayerRb.AddForce(Vector3.left * jump, ForceMode.Impulse);
-                    break;
-            }
+            PlayerRb.AddForce(transform.up * jump, ForceMode.Impulse);
         }
 
     }

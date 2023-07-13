@@ -906,6 +906,37 @@ Transform:
   m_Father: {fileID: 1521494469}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &291148331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 291148332}
+  m_Layer: 0
+  m_Name: RayStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &291148332
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291148331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.59, z: 0.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450653259175915}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299597814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6219,7 +6250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1628940704
 Transform:
   m_ObjectHideFlags: 0
@@ -7745,11 +7776,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149603880273}
-  m_LocalRotation: {x: -0.0100015, y: 0.99994993, z: -0.0004529861, w: 1.957138e-29}
-  m_LocalPosition: {x: 20.728516, y: 4.236992, z: 8.751277}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 20.67, y: 4.28, z: 8.751277}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 291148332}
   - {fileID: 942345878203165021}
   - {fileID: 2308509019589383327}
   - {fileID: 8939675836045381124}
@@ -7762,7 +7794,7 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0.052, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &546209300877281314
 GameObject:
   m_ObjectHideFlags: 0
@@ -7869,6 +7901,7 @@ GameObject:
   - component: {fileID: 919132149603880278}
   - component: {fileID: 919132149603880281}
   - component: {fileID: 919132149603880280}
+  - component: {fileID: 919132149603880282}
   - component: {fileID: 919132149603880279}
   m_Layer: 0
   m_Name: Exo Gray
@@ -7932,6 +7965,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAxis: 0
+  castPoint: {fileID: 291148331}
+  hologramHandler: {fileID: 919132149603880282}
+  movements: {fileID: 919132149603880281}
 --- !u!54 &919132149603880280
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7974,6 +8010,19 @@ MonoBehaviour:
   PlayerRb: {fileID: 919132149603880280}
   verticalinput: 0
   horizontalinput: 0
+  normal: {x: 0, y: 0, z: 0}
+--- !u!114 &919132149603880282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149603880273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc61ec97bfda2e146b06956f0d811074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &927016744737343624
 GameObject:
   m_ObjectHideFlags: 0
